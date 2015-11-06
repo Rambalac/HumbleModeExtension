@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Work Mode",
+  "version": "1.0",
+  "description": "Blocks images and/or turns everything to black and white",
+  "author": "Rambalac",
+  "icons": { "128": "icon.png"},
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  
+  "background": {
+    "scripts": ["button.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+	{
+		"matches": ["*://*/*"],
+		"all_frames": true,
+		"css": ["bandw.css"],
+		"js": ["bandw.js"]
+	}
+  ],
+  
+  "permissions": [
+    "activeTab",
+	"storage",
+	"tabs",
+    "https://ajax.googleapis.com/"
+  ]
+}
