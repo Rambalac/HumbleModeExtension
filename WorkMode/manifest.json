@@ -16,17 +16,20 @@
   
   "content_scripts": [
 	{
-		"matches": ["*://*/*"],
+		"matches": [
+			"http://*/*",
+			"https://*/*"
+			],
 		"all_frames": true,
 		"css": ["bandw.css"],
 		"js": ["bandw.js"]
 	}
   ],
-  
+  "web_accessible_resources": [
+	"dummy.png"
+  ],
   "permissions": [
     "activeTab",
-	"storage",
-	"tabs",
-    "https://ajax.googleapis.com/"
+	"storage"
   ]
 }
