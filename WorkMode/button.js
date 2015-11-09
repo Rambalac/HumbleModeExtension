@@ -4,10 +4,22 @@ var tabs = {};
 
 chrome.storage.local.get(function (localStorage) {
   tabs = localStorage.tabs || {};
+
+  chrome.windows.getAll({ populate: true }, function (windows) {
+    var newtabs = {};
+    windows.ForEach(function (win) {
+      win.tabs.ForEach(function (tab) {
+        if (tabs[tab.id] === true) newtabs[tab.id] = true;
+      });
+    });
+    tabs = newtabs;
+    chrome.storage.local.set({ tabs: tabs });
+  });
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
   var tab = sender.tab;
+  //alert(tab.id);
   if (tabs[tab.openerTabId] === true) {
     tabs[tab.id] = true;
     chrome.storage.local.set({ tabs: tabs });
@@ -19,23 +31,33 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
 });
 
 chrome.browserAction.onClicked.addListener(function (tab) {
+  //alert(tab.id);
   var state = tabs[tab.id] || false;
   state = !state;
 
-  tabs[tab.id] = state;
+  if (state === true)
+    tabs[tab.id] = true;
+  else
+    delete tabs[tab.id];
   chrome.storage.local.set({ tabs: tabs });
 
-  var text = (state === true) ? "on" : "";
-  chrome.browserAction.setBadgeText({ text: text, tabId: tab.id });
-  var code = (state === true) ? "workmodeon(" + tab.id + ");" : "workmodeoff();";
-  chrome.tabs.executeScript({
-    code: code
-  });
-
-  tab.onRemoved.addListener(function (tabid, removeInfo) {
-    delete tabs[tabid];
-    chrome.storage.local.set({ tabs: tabs });
-  });
+  if (state === true) {
+    chrome.browserAction.setBadgeText({ text: "on", tabId: tab.id });
+    chrome.tabs.executeScript({
+      code: "workmodeon(" + tab.id + ");"
+    });
+    tab.onRemoved.addListener(function (tabid, removeInfo) {
+      alert(1);
+      delete tabs[tabid];
+      chrome.storage.local.set({ tabs: tabs });
+    });
+  }
+  else {
+    chrome.browserAction.setBadgeText({ text: "", tabId: tab.id });
+    chrome.tabs.executeScript({
+      code: "workmodeoff();"
+    });
+  }
 });
 
 chrome.webRequest.onBeforeRequest.addListener(
