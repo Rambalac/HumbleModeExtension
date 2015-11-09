@@ -31,13 +31,6 @@ var observer = new MutationObserver(function (mutations) {
 });
 
 
-function workmodeon(tabid) {
-  window.location.reload(true);
-}
-function workmodeoff() {
-  window.location.reload();
-}
-
 function applyToDocument() {
   var body = document.getElementsByTagName('body')[0];
   body.className += " ___body_desaturated___";
@@ -46,8 +39,7 @@ function applyToDocument() {
 }
 
 function applyWorkMode(tabid) {
-  //applyToDocument();
-  window.addEventListener("load", applyToDocument);
+  window.addEventListener('DOMContentLoaded', applyToDocument, false);
   observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-src"] });
 }
 

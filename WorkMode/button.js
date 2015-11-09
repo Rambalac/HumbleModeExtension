@@ -43,9 +43,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
   if (state === true) {
     chrome.browserAction.setBadgeText({ text: "on", tabId: tab.id });
-    chrome.tabs.executeScript({
-      code: "workmodeon(" + tab.id + ");"
-    });
     tab.onRemoved.addListener(function (tabid, removeInfo) {
       alert(1);
       delete tabs[tabid];
@@ -54,10 +51,11 @@ chrome.browserAction.onClicked.addListener(function (tab) {
   }
   else {
     chrome.browserAction.setBadgeText({ text: "", tabId: tab.id });
-    chrome.tabs.executeScript({
-      code: "workmodeoff();"
-    });
   }
+  chrome.tabs.executeScript({
+    code: "window.location.reload(true);"
+  });
+
 });
 
 chrome.webRequest.onBeforeRequest.addListener(
