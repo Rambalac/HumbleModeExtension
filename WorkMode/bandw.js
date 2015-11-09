@@ -4,11 +4,6 @@ function processArray(tags, func) {
   for (var i = 0, len = tags.length; i < len; i++) func(tags[i])
 }
 
-function replaceOtherImages(tag) {
-  var style = tag.style;
-  style.backgroundImage = "";
-}
-
 function replaceImages(tag) {
   if (tag.src !== "" && tag.src !== undefined && tag.src !== imageurl) {
     tag.src = imageurl;
