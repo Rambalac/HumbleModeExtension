@@ -11,7 +11,7 @@
   
   "background": {
     "scripts": ["button.js"],
-    "persistent": false
+    "persistent": true
   },
   
   "content_scripts": [
@@ -22,7 +22,8 @@
 			],
 		"all_frames": true,
 		"css": ["bandw.css"],
-		"js": ["bandw.js"]
+		"js": ["bandw.js"],
+		"run_at": "document_start"
 	}
   ],
   "web_accessible_resources": [
@@ -30,6 +31,9 @@
   ],
   "permissions": [
     "activeTab",
-	"storage"
+	"storage",
+	"webRequest",
+	"webRequestBlocking",
+	"<all_urls>"
   ]
 }

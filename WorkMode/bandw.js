@@ -1,37 +1,27 @@
 var imageurl = chrome.extension.getURL("dummy.png");
 
+function processArray(tags, func) {
+    for (var i = 0, len = tags.length; i < len; i++) func(tags[i])
+}
+
 function replaceOtherImages(tag) {
     var style = tag.style;
     style.backgroundImage = "";
 }
 
 function replaceImages(tag) {
-    if (tag.src !== "" && tag.src !== undefined && tag.src !== imageurl) {
+    if (tag['src'] !== "" && tag['src'] !== undefined) {
         tag.src = imageurl;
     }
-    if (tag.srcset !== "" && tag.srcset !== undefined && tag.srcset !== imageurl) {
+
+    if (tag['srcset'] !== "" && tag['srcset'] !== undefined) {
         tag.srcset = imageurl;
     }
+
     if (tag['data-src'] !== "" && tag['data-src'] !== undefined) {
         tag['data-src'] = "";
         tag.src = imageurl;
     }
-}
-
-function processArray(tags, func) {
-    for (var i = 0, len = tags.length; i < len; i++) func(tags[i])
-}
-
-function checkTag(node) {
-    if (node.nodeType !== 1) return;
-    if (node.tagName === "SCRIPT") return;
-    if (node.tagName === "META") return;
-
-    replaceImages(node)
-    processArray(document.getElementsByTagName("img"), replaceImages);
-
-    replaceOtherImages(node);
-    processArray(document.getElementsByTagName("*"), replaceOtherImages);
 }
 
 var observer = new MutationObserver(function (mutations) {
@@ -41,25 +31,24 @@ var observer = new MutationObserver(function (mutations) {
 });
 
 
-function workmodeon(reallydo) {
-    if (reallydo !== true) return;
-    var body = document.getElementsByTagName('body')[0];
-    body.className += " ___body_desaturated___";
-    checkTag(document);
-    body.addEventListener("DOMNodeInserted", function (evt) {
-        checkTag(evt.target);
-        
-        var node = evt.target;
-        if (node.nodeType !== 1) return;
-        if (node.tagName === "SCRIPT") return;
-        if (node.tagName === "META") return;
-
-        observer.observe(evt.target, { attributes: true, subtree: true, attributeFilter: ["src", "srcset", "data-src"] });
-
-    }, false);
+function workmodeon(tabid) {
+    window.location.reload(true);
 }
 function workmodeoff() {
     window.location.reload();
 }
 
-chrome.runtime.sendMessage({}, workmodeon);
+function applyToDocument() {
+    var body = document.getElementsByTagName('body')[0];
+    body.className += " ___body_desaturated___";
+
+    processArray(document.getElementsByTagName("img"), replaceImages);
+}
+
+function applyWorkMode(tabid) {
+    //applyToDocument();
+    window.addEventListener("load", applyToDocument);
+    observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-src"] });
+}
+
+chrome.runtime.sendMessage({}, applyWorkMode);
