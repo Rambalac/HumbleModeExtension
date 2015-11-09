@@ -10,15 +10,15 @@ function replaceOtherImages(tag) {
 }
 
 function replaceImages(tag) {
-  if (tag['src'] !== "" && tag['src'] !== undefined) {
+  if (tag.src !== "" && tag.src !== undefined && tag.src !== imageurl) {
     tag.src = imageurl;
   }
 
-  if (tag['srcset'] !== "" && tag['srcset'] !== undefined) {
+  if (tag.srcset !== "" && tag.srcset !== undefined && tag.srcset !== imageurl) {
     tag.srcset = imageurl;
   }
 
-  if (tag['data-src'] !== "" && tag['data-src'] !== undefined) {
+  if (tag['data-src'] !== "" && tag['data-src'] !== undefined && tag.src !== imageurl) {
     tag['data-src'] = "";
     tag.src = imageurl;
   }
@@ -40,7 +40,7 @@ function applyToDocument() {
 
 function applyWorkMode(tabid) {
   window.addEventListener('DOMContentLoaded', applyToDocument, false);
-  observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-src"] });
+  observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["src", "srcset", "data-src"] });
 }
 
 chrome.runtime.sendMessage({}, applyWorkMode);

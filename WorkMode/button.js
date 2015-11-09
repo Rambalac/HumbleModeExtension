@@ -41,21 +41,17 @@ chrome.browserAction.onClicked.addListener(function (tab) {
     delete tabs[tab.id];
   chrome.storage.local.set({ tabs: tabs });
 
-  if (state === true) {
-    chrome.browserAction.setBadgeText({ text: "on", tabId: tab.id });
-    tab.onRemoved.addListener(function (tabid, removeInfo) {
-      alert(1);
-      delete tabs[tabid];
-      chrome.storage.local.set({ tabs: tabs });
-    });
-  }
-  else {
-    chrome.browserAction.setBadgeText({ text: "", tabId: tab.id });
-  }
+  var text = (state === true) ? "on" : "";
+  chrome.browserAction.setBadgeText({ text: text, tabId: tab.id });
   chrome.tabs.executeScript({
     code: "window.location.reload(true);"
   });
 
+});
+
+chrome.tabs.onRemoved.addListener(function (tabid, removeInfo) {
+  delete tabs[tabid];
+  chrome.storage.local.set({ tabs: tabs });
 });
 
 chrome.webRequest.onBeforeRequest.addListener(
