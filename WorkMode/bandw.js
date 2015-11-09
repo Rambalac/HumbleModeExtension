@@ -1,54 +1,54 @@
 var imageurl = chrome.extension.getURL("dummy.png");
 
 function processArray(tags, func) {
-    for (var i = 0, len = tags.length; i < len; i++) func(tags[i])
+  for (var i = 0, len = tags.length; i < len; i++) func(tags[i])
 }
 
 function replaceOtherImages(tag) {
-    var style = tag.style;
-    style.backgroundImage = "";
+  var style = tag.style;
+  style.backgroundImage = "";
 }
 
 function replaceImages(tag) {
-    if (tag['src'] !== "" && tag['src'] !== undefined) {
-        tag.src = imageurl;
-    }
+  if (tag['src'] !== "" && tag['src'] !== undefined) {
+    tag.src = imageurl;
+  }
 
-    if (tag['srcset'] !== "" && tag['srcset'] !== undefined) {
-        tag.srcset = imageurl;
-    }
+  if (tag['srcset'] !== "" && tag['srcset'] !== undefined) {
+    tag.srcset = imageurl;
+  }
 
-    if (tag['data-src'] !== "" && tag['data-src'] !== undefined) {
-        tag['data-src'] = "";
-        tag.src = imageurl;
-    }
+  if (tag['data-src'] !== "" && tag['data-src'] !== undefined) {
+    tag['data-src'] = "";
+    tag.src = imageurl;
+  }
 }
 
 var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-        replaceImages(mutation.target);
-    });
+  mutations.forEach(function (mutation) {
+    replaceImages(mutation.target);
+  });
 });
 
 
 function workmodeon(tabid) {
-    window.location.reload(true);
+  window.location.reload(true);
 }
 function workmodeoff() {
-    window.location.reload();
+  window.location.reload();
 }
 
 function applyToDocument() {
-    var body = document.getElementsByTagName('body')[0];
-    body.className += " ___body_desaturated___";
+  var body = document.getElementsByTagName('body')[0];
+  body.className += " ___body_desaturated___";
 
-    processArray(document.getElementsByTagName("img"), replaceImages);
+  processArray(document.getElementsByTagName("img"), replaceImages);
 }
 
 function applyWorkMode(tabid) {
-    //applyToDocument();
-    window.addEventListener("load", applyToDocument);
-    observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-src"] });
+  //applyToDocument();
+  window.addEventListener("load", applyToDocument);
+  observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["data-src"] });
 }
 
 chrome.runtime.sendMessage({}, applyWorkMode);

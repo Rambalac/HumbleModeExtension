@@ -2,12 +2,10 @@
   "manifest_version": 2,
   "name": "Work Mode",
   "version": "1.0",
-  "description": "Blocks images and/or turns everything to black and white",
+  "description": "Removes images where possible and turns everything to black and white",
   "author": "Rambalac",
-  "icons": { "128": "icon.png"},
-  "browser_action": {
-    "default_icon": "icon.png"
-  },
+  "icons": {"128": "icon.png"},
+  "browser_action": {"default_icon": "icon.png"},
   
   "background": {
     "scripts": ["button.js"],
@@ -15,25 +13,23 @@
   },
   
   "content_scripts": [
-	{
-		"matches": [
-			"http://*/*",
-			"https://*/*"
-			],
-		"all_frames": true,
-		"css": ["bandw.css"],
-		"js": ["bandw.js"],
-		"run_at": "document_start"
-	}
+	  {
+		  "matches": [
+			  "http://*/*",
+			  "https://*/*"
+			  ],
+		  "all_frames": true,
+		  "css": ["bandw.css"],
+		  "js": ["bandw.js"],
+		  "run_at": "document_start"
+	  }
   ],
-  "web_accessible_resources": [
-	"dummy.png"
-  ],
+  "web_accessible_resources": [	"dummy.png"],
   "permissions": [
     "activeTab",
-	"storage",
-	"webRequest",
-	"webRequestBlocking",
-	"<all_urls>"
+	  "storage",
+	  "webRequest",
+	  "webRequestBlocking",
+	  "<all_urls>"
   ]
 }

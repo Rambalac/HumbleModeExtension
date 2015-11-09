@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		WorkMode\dummy.png = WorkMode\dummy.png
 		WorkMode\icon.png = WorkMode\icon.png
 		WorkMode\manifest.json = WorkMode\manifest.json
-		WorkMode\onworkmodeoff.js = WorkMode\onworkmodeoff.js
-		WorkMode\onworkmodeon.js = WorkMode\onworkmodeon.js
 		WorkMode\popup.html = WorkMode\popup.html
 	EndProjectSection
 EndProject
