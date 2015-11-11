@@ -20,10 +20,6 @@ chrome.storage.local.get(function (localStorage) {
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
   var tab = sender.tab;
   //alert(tab.id);
-  if (tabs[tab.openerTabId] === true) {
-    tabs[tab.id] = true;
-    chrome.storage.local.set({ tabs: tabs });
-  }
   if (tabs[tab.id] === true) {
     chrome.browserAction.setBadgeText({ text: "on", tabId: tab.id });
     callback(tab.id);
@@ -64,3 +60,10 @@ chrome.webRequest.onBeforeRequest.addListener(
       types: ["image"]
     },
     ["blocking"]);
+
+chrome.tabs.onCreated.addListener(function (tab) {
+  if (tabs[tab.openerTabId] === true) {
+    tabs[tab.id] = true;
+    chrome.storage.local.set({ tabs: tabs });
+  }
+})
