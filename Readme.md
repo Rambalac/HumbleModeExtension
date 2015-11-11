@@ -6,6 +6,6 @@ Extension remembers tabs where it was enabled and all tabs opened from enabled t
 
 Installation
 ------------
-I don't want to pay 5$ for developer account just for this extension because for it works for me anyway.
+I don't want to pay 5$ for developer account just for this extension because for me it works anyway.
 
 To install it copy folder WorkMode to any suitable location, set Chrome Extension Developer mode and add copied folder.
