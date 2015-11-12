@@ -1,5 +1,5 @@
 Humble Mode Chrome Extension
-==========================
+============================
 This extension turns tabs content to B&W and removes images where possible. It does not remove video, canvas and flash.
 
 Extension remembers tabs where it was enabled and all tabs opened from enabled tabs get enabled automatically.
