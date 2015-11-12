@@ -1,4 +1,4 @@
-Work Mode Chrome Extension
+Humble Mode Chrome Extension
 ==========================
 This extension turns tabs content to B&W and removes images where possible. It does not remove video, canvas and flash.
 
@@ -8,4 +8,4 @@ Installation
 ------------
 I don't want to pay 5$ for developer account just for this extension because for me it works anyway.
 
-To install it copy folder WorkMode to any suitable location, set Chrome Extension Developer mode and add copied folder.
+To install it copy folder HumbleMode to any suitable location, set Chrome Extension Developer mode and add copied folder.

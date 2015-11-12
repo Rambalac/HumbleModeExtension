@@ -28,14 +28,14 @@ var observer = new MutationObserver(function (mutations) {
 
 function applyToDocument() {
   var body = document.getElementsByTagName('body')[0];
-  body.className += " ___body_desaturated___";
+  body.className += " ___body_humble_mode_desaturated___";
 
   processArray(document.getElementsByTagName("img"), replaceImages);
 }
 
-function applyWorkMode(tabid) {
+function applyHumbleMode(tabid) {
   window.addEventListener('DOMContentLoaded', applyToDocument, false);
   observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["src", "srcset", "data-src"] });
 }
 
-chrome.runtime.sendMessage({}, applyWorkMode);
+chrome.runtime.sendMessage({}, applyHumbleMode);

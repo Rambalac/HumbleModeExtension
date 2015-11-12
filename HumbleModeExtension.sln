@@ -5,13 +5,12 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18C22009-4334-471C-AAF5-EF96465EE161}"
 	ProjectSection(SolutionItems) = preProject
-		WorkMode\bandw.css = WorkMode\bandw.css
-		WorkMode\bandw.js = WorkMode\bandw.js
-		WorkMode\button.js = WorkMode\button.js
-		WorkMode\dummy.png = WorkMode\dummy.png
-		WorkMode\icon.png = WorkMode\icon.png
-		WorkMode\manifest.json = WorkMode\manifest.json
-		WorkMode\popup.html = WorkMode\popup.html
+		HumbleMode\bandw.css = HumbleMode\bandw.css
+		HumbleMode\bandw.js = HumbleMode\bandw.js
+		HumbleMode\button.js = HumbleMode\button.js
+		HumbleMode\dummy.png = HumbleMode\dummy.png
+		HumbleMode\icon.png = HumbleMode\icon.png
+		HumbleMode\manifest.json = HumbleMode\manifest.json
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
