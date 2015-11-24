@@ -13,23 +13,23 @@
   },
   
   "content_scripts": [
-	  {
-		  "matches": [
-			  "http://*/*",
-			  "https://*/*"
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
       ],
-		  "all_frames": true,
-		  "css": ["bandw.css"],
-		  "js": ["bandw.js"],
-		  "run_at": "document_start"
-	  }
+      "all_frames": true,
+      "css": ["bandw.css"],
+      "js": ["bandw.js"],
+      "run_at": "document_start"
+    }
   ],
   "web_accessible_resources": [	"dummy.png"],
   "permissions": [
     "activeTab",
-	  "storage",
-	  "webRequest",
-	  "webRequestBlocking",
-	  "<all_urls>"
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
   ]
 }

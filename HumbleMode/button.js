@@ -39,10 +39,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
   var text = (state === true) ? "on" : "";
   chrome.browserAction.setBadgeText({ text: text, tabId: tab.id });
-  chrome.tabs.executeScript({
-    code: "window.location.reload(true);"
-  });
-
+  chrome.tabs.reload(tab.id);
 });
 
 chrome.tabs.onRemoved.addListener(function (tabid, removeInfo) {
@@ -61,9 +58,35 @@ chrome.webRequest.onBeforeRequest.addListener(
     },
     ["blocking"]);
 
-chrome.tabs.onCreated.addListener(function (tab) {
-  if (tabs[tab.openerTabId] === true) {
-    tabs[tab.id] = true;
+var prevTabId;
+var curTabId;
+
+chrome.tabs.onSelectionChanged.addListener(function (tabId, selectInfo) {
+  prevTabId = curTabId;
+  curTabId = tabId;
+});
+
+function checkAndEnable(prevTabId, tabId)
+{
+  if (tabs[prevTabId] === true) {
+    tabs[tabId] = true;
     chrome.storage.local.set({ tabs: tabs });
+  }
+}
+
+chrome.tabs.onCreated.addListener(function (tab) {
+  if (tab.openerTabId !== undefined) {
+    checkAndEnable(tab.openerTabId, tab.id);
+  } else {
+    chrome.tabs.query(
+      { currentWindow: true, active: true },
+      function (tabArray) {
+        if (tabArray[0].id !== tab.id) {
+          checkAndEnable(tabArray[0].id, tab.id);
+        } else
+        {
+          checkAndEnable(prevTabId, tab.id);
+        }
+      });
   }
 })
