@@ -34,6 +34,7 @@ function applyToDocument() {
 }
 
 function applyHumbleMode(tabid) {
+  if (tabid === undefined) return;
   window.addEventListener('DOMContentLoaded', applyToDocument, false);
   observer.observe(document, { attributes: true, subtree: true, attributeFilter: ["src", "srcset", "data-src"] });
 }
